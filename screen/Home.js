@@ -219,7 +219,7 @@ const Home = ({ route }) => {
                       }}>
 
 
-                        <Image style={styles.avtar} source={require('../assets/14.png')} />
+                        <Image style={[styles.avtar,{marginLeft:responsiveWidth(1)}]} source={require('../assets/14.png')} />
 
                         <View style={[styles.flatlisttext, { width: responsiveWidth(40), }]}>
 
