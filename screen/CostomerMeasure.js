@@ -11,6 +11,7 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import { styles } from './Style';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { images } from './images';
 
 
 const CostomerMeasure = ({ route }) => {
@@ -271,8 +272,13 @@ const CostomerMeasure = ({ route }) => {
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => {
 
-                  let url = `../assets/measurmentImage/${item.imgurl}`
+                  let url = ''
 
+                  images.map((e) => {
+                    if(e.value === item.imgurl){
+                      url = e.path
+                    }
+                  })
 
                   return (<>
                     <TouchableOpacity onPress={() => {
@@ -306,10 +312,10 @@ const CostomerMeasure = ({ route }) => {
                           <View>
 
                             {
-                              item.imgurl === '' || item.imgurl === undefined ?
+                              url === '' ?
                                 <Image style={[styles.avtar, { borderRadius: 5, height: responsiveHeight(10), width: responsiveWidth(21) }]} source={require('../assets/measurmentImage/noimg.png')} />
                                 :
-                                <Image style={[styles.avtar, { borderRadius: 5, height: responsiveHeight(10), width: responsiveWidth(21) }]} source={{ uri: url}} />
+                                <Image style={[styles.avtar, { borderRadius: 5, height: responsiveHeight(10), width: responsiveWidth(21) }]} source={url} />
                             }
                           </View>
                         </View>
