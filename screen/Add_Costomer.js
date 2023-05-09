@@ -18,7 +18,6 @@ const Add_Costomer = ({ route }) => {
   const [caddress, setcaddress] = useState("");
   const [cemail, setcemail] = useState("");
   const [netinfo, setNetinfo] = useState(Boolean);
-  const [tempcustomer, setTempcustomer] = useState([]);
 
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -35,7 +34,7 @@ const Add_Costomer = ({ route }) => {
 
   const id = route.params.id
 
-  const [data, setdata] = useState('');
+  const [ddata, setdata] = useState('');
 
   const navigation = useNavigation()
 
@@ -43,59 +42,35 @@ const Add_Costomer = ({ route }) => {
 
     // 63064232cf92b07e37090e0a
     toggleModalVisibility()
-    if (!netinfo) {
-      let duplidata = await AsyncStorage.getItem('addCustomer')
-      let dacust = [];
-      dacust = JSON.parse(duplidata)
-      console.log(dacust);
 
-      let arr = {
-        'cname': cname,
-        'cphone': cphone,
-        'optcphone': optcphone,
-        'cemail': cemail,
-        'caddress': caddress,
-        'ccity': ccity,
-        'gen': checked
-      };
-      if (dacust == null) {
-        dacust = [arr]
+    try {
+      // const data = { cname, cphone, ccity, caddress, cemail, checked }
+
+      const res = await fetch(`https://aufcart.com/api/Newcustomer/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          cname, cphone, optcphone, ccity, caddress, cemail, checked
+        })
+      })
+
+      const data = await res.json();
+
+      if (!data) {
       }
       else {
-        dacust.push(arr);
-      }
-      await AsyncStorage.setItem('addCustomer', JSON.stringify(dacust))
-    } else {
-
-      try {
-        // const data = { cname, cphone, ccity, caddress, cemail, checked }
-
-        const res = await fetch(`https://aufcart.com/api/Newcustomer/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            cname, cphone, optcphone, ccity, caddress, cemail, checked
-          })
+        await AsyncStorage.setItem('alldata', JSON.stringify(data))
+        setdata(data);
+        navigation.navigate("Home", {
+          _id: id
         })
-
-        const data = await res.json();
-
-        if (!data) {
-        }
-        else {
-          await AsyncStorage.setItem('alldata', JSON.stringify(data))
-          setdata(data);
-          navigation.navigate("Home", {
-            _id: id
-          })
-        }
-
-
-      } catch (e) {
-        window.alert("SomeThing Went Wrong")
       }
+
+
+    } catch (e) {
+      window.alert("SomeThing Went Wrong")
     }
 
   }

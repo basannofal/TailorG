@@ -42,21 +42,10 @@ const Home = ({ route }) => {
   const [loading, setloading] = useState(true);
   const [filterdata, setfilterdata] = useState([]);
   const [search, setsearch] = useState('');
-  const [nn, setnn] = useState([]);
   const [netinfo, setNetinfo] = useState(false);
 
 
   const getdata = async () => {
-    let dcust = await AsyncStorage.getItem('alldata');
-    setloading(true)
-    if (dcust) {
-      let dacust = JSON.parse(dcust);
-      setdata(dacust.costomer);
-      setfilterdata(dacust.costomer)
-      setloading(false)
-
-    }
-    else {
 
       try {
         // let x = await Network.getIpAddressAsync();
@@ -83,7 +72,6 @@ const Home = ({ route }) => {
       } catch (e) {
         window.alert("Check Network Connection")
       }
-    }
 
   }
 
