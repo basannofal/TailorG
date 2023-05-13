@@ -1,11 +1,8 @@
-import { Button,ActivityIndicator,SafeAreaView, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import { ActivityIndicator,SafeAreaView, FlatList, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigation } from '@react-navigation/native'
+import {  useNavigation } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import SelectDropdown from 'react-native-select-dropdown'
 import { styles } from './Style';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -15,12 +12,9 @@ const CostomerOrder = ({ route }) => {
 
   const [loading, setloading] = useState(true);
   const [customer, setcustomer] = useState(Array);
-  const [order, setorder] = useState(Array);
   const [id, setid] = useState('');
   const [customerid, setcustomerid] = useState('');
   const [Ordertype, setOrdertype] = useState('Active');
-  const [truecheck, settruecheck] = useState([]);
-  const [falsecheck, setfalsecheck] = useState([]);
   
 
   const countries = ["Active", "Delivered",]
@@ -28,9 +22,7 @@ const CostomerOrder = ({ route }) => {
   const getdata = async () => {
 
     try {
-      const mainid = route.params.id
-      const objectid = route.params.obid
-      const res = await fetch(`https://aufcart.com/api/getuser/${mainid}/${objectid}`, {
+      const res = await fetch(`https://aufcart.com/api/getuser/${route.params.id}/${route.params.obid}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
@@ -45,8 +37,6 @@ const CostomerOrder = ({ route }) => {
       else {
         setcustomer(data[0].costomer[0].corder)
         setloading(false)
-        // checkactive(data[0].costomer[0].corder)
-
       }
 
     } catch (e) {
@@ -165,7 +155,6 @@ const CostomerOrder = ({ route }) => {
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => {
                   if (item.status === "true") {
-                    // console.log(truecheck.length)
                     return (<>
                       <TouchableOpacity onPress={() => {
                         navigation.navigate("Order Detail", {
@@ -202,23 +191,7 @@ const CostomerOrder = ({ route }) => {
                     </>)
 
                   }
-            //       else if(truecheck.length === 0){
-
-            //         return(
-
-            //         <View style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:responsiveHeight(70)}}>
-            //   <Text style={{fontSize:responsiveFontSize(4),opacity:.4,fontFamily:"Regular"}}>No Order Found</Text>
-            //   <TouchableOpacity style={{width:responsiveWidth(74)}}   onPress={() => {
-            //     navigation.navigate("Add Order", {
-            //       id: id,
-            //       obid: customerid
-            //     })
-            //   }}>
-            //     <Text style={[{textAlign:"center",marginTop:responsiveHeight(3), fontSize:responsiveFontSize(2), borderRadius:10, padding:responsiveHeight(1), color:"#fff",fontFamily:"Regular",backgroundColor:"#56BC1F",}]}>Add Order </Text>
-            //   </TouchableOpacity>
-            // </View>
-            //         )
-            //       }
+          
                 }
                 }
               />
@@ -265,16 +238,7 @@ const CostomerOrder = ({ route }) => {
                     </>)
 
                   }
-                  // else if(falsecheck.length === 0){
-
-                  // return(
-
-                  //   <View style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:responsiveHeight(70)}}>
-                  //   <Text style={{fontSize:responsiveFontSize(4),opacity:.4,fontFamily:"Regular"}}>No Order Found</Text>
-
-                  //   </View>
-                  // )
-                  // }
+            
                 }
                 }
               />
@@ -301,58 +265,3 @@ const CostomerOrder = ({ route }) => {
 
 export default CostomerOrder
 
-// const styles = StyleSheet.create({
-//   container: {
-//     marginHorizontal: 16,
-
-//   },
-//   orderframe: {
-//     marginVertical: 5,
-
-//   },
-//   ordercontainer: {
-//     paddingVertical: 5,
-//     paddingHorizontal: 10,
-//     borderWidth: .9,
-//     borderColor: "#777777",
-//     borderRadius:10,
-//     backgroundColor:"#f0f0f0",
-//     marginVertical: 5,
-   
-//   },
-//   orderHeading: {
-//     fontSize: 20,
-//     opacity: .8,
-//     fontWeight: "bold",
-//     paddingVertical: 5,
-//     textTransform: "capitalize"
-//   },
-//   orderprize: {
-//     fontSize: 15,
-//     opacity:.6,
-//     fontWeight: "400",
-//     marginBottom: 3,
-//     marginLeft: 3
-//   },
-//   orderTime: {
-//     fontSize: 15,
-//     opacity:.6,
-//     fontWeight: "400",
-//     marginBottom: 1,
-//     marginLeft: 3
-//   },
-//   orderDesc: {
-//     fontSize: 15,
-//     opacity:.6,
-//     fontWeight: "400",
-//     marginBottom: 1,
-//     marginLeft: 3,
-//   },
-
-//   containernew:
-//   {
-//     marginTop: 10,
-//   }
-
-
-// })

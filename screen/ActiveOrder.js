@@ -1,10 +1,9 @@
-import { ActivityIndicator, SafeAreaView, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Button, FlatList } from 'react-native'
+// All Order OF All Customer
+
+import { ActivityIndicator, SafeAreaView, Image, Text, TouchableOpacity, View, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigation } from '@react-navigation/native'
+import {  useNavigation } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import { styles } from './Style';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -29,7 +28,7 @@ const ActiveOrder = ({ route }) => {
     let neworderarr = [];
 
     try {
-      const res = await fetch(`https://aufcart.com/api/getuser/${id}`, {
+      const res = await fetch(`https://aufcart.com/api/getuser/${route.params._id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
@@ -63,64 +62,7 @@ const ActiveOrder = ({ route }) => {
 
 
 
-  const header = () => {
-
-
-    return (
-      <>
-
-
-
-        <View style={[styles.flatlistheader,]}>
-          <View style={[styles.headername,]}>
-            <View>
-              <Text style={styles.headernametext}>Orders</Text>
-            </View>
-
-            {/* 
-            <TouchableOpacity style={[styles.headericon, { marginLeft: responsiveWidth(5) }]} onPress={() => {
-              navigation.navigate("Add Costomer", {
-                id: id
-              })
-            }} >
-              <AntDesign name="plus" size={14} style={{ marginHorizontal: responsiveWidth(.5), }} color="black" />
-              <Text style={[styles.link,]}>Add Order</Text>
-            </TouchableOpacity> */}
-
-
-            <View style={{ width: responsiveWidth(78), height: responsiveHeight(5), marginLeft: responsiveWidth(28), flexDirection: "row", alignItems: "center" }}>
-              <SelectDropdown
-                data={countries}
-                onSelect={(selectedItem, index) => {
-                  setOrdertype(selectedItem)
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  return selectedItem
-                }}
-                rowTextForSelection={(item, index) => {
-                  return item
-                }}
-                defaultValue={"Active"}
-
-
-
-                buttonStyle={{ backgroundColor: "#fff", width: "41%", right: 0 }}
-                buttonTextStyle={{ fontSize: 14, color: "#56BC1F", fontWeight: "bold", textAlign: "center", }}
-                selectedRowTextStyle={{ fontSize: 14, fontWeight: "bold", color: "#56BC1F", opacity: 1 }}
-                dropdownStyle={{ marginTop: -10, borderRadius: 5, }}
-                rowTextStyle={{ fontSize: 14 }}
-
-                renderDropdownIcon={() => { return (<AntDesign name="down" size={14} color="black" />) }}
-              />
-
-            </View>
-          </View>
-
-
-        </View>
-      </>
-    )
-  }
+  
 
   useEffect(() => {
     getdata();
@@ -300,106 +242,3 @@ const ActiveOrder = ({ route }) => {
 }
 
 export default ActiveOrder
-
-{/* <View style={styles.container}>
-<FlatList
-  data={allorder}
-  keyExtractor={item => item._id}
-  inverted
-  renderItem={({ item }) => {
-    if (item.status === "true") {
-      return (
-        <TouchableOpacity onPress={() => {
-          navigation.navigate("Order Detail", {
-            id: id,
-            orid: item._id
-          })
-        }}>
-          <View style={styles.ordercontainer}>
-            <Text style={styles.orderHeading}>{item.clothType}</Text>
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-              <FontAwesome name="rupee" size={16} color="black" style={{ opacity: .6, paddingHorizontal: 5 }} />
-              <Text style={styles.orderprize}>{item.prize}</Text>
-            </View>
-
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-              <MaterialCommunityIcons name="list-status" size={16} color="black" style={{ opacity: .6, paddingHorizontal: 2 }} />
-              <Text style={styles.orderDesc}>{item.status === 'true' ? "Order Recived" : "Order Delevered"}</Text>
-            </View>
-
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-              <EvilIcons name="clock" size={16} color="black" style={{ paddingHorizontal: 2 }} />
-              <Text style={styles.orderTime}>{item.deliveryDate === '' ? "" : `${item.deliveryDate}/${item.deliveryMonth}/${item.deliveryYear}`}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      )
-    }
-    else {
-
-
-    }
-
-  }
-  }
-/>
-</View> */}
-
-
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     marginHorizontal: 16,
-
-//   },
-//   orderframe: {
-//     marginVertical: 5,
-
-//   },
-//   ordercontainer: {
-//     paddingVertical: 5,
-//     paddingHorizontal: 10,
-//     borderWidth: .9,
-//     borderColor: "#777777",
-//     borderRadius: 10,
-//     backgroundColor: "#f0f0f0",
-//     marginVertical: 5,
-
-//   },
-//   orderHeading: {
-//     fontSize: 20,
-//     opacity: .8,
-//     fontWeight: "bold",
-//     paddingVertical: 5,
-//     textTransform: "capitalize"
-//   },
-//   orderprize: {
-//     fontSize: 15,
-//     opacity: .6,
-//     fontWeight: "400",
-//     marginBottom: 3,
-//     marginLeft: 3
-//   },
-//   orderTime: {
-//     fontSize: 15,
-//     opacity: .6,
-//     fontWeight: "400",
-//     marginBottom: 1,
-//     marginLeft: 3
-//   },
-//   orderDesc: {
-//     fontSize: 15,
-//     opacity: .6,
-//     fontWeight: "400",
-//     marginBottom: 1,
-//     marginLeft: 3,
-//   },
-
-//   containernew:
-//   {
-//     marginTop: 10,
-//   }
-
-
-// })

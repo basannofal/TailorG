@@ -1,4 +1,6 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, SafeAreaView, ActivityIndicator, Modal } from 'react-native'
+// Measurment form 
+
+import { ScrollView, Text, TouchableOpacity, View, TextInput, SafeAreaView, ActivityIndicator, Modal } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -10,9 +12,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 
 const Add_measurment_form = ({ route }) => {
-    const [clothtype, setclothtype] = useState('');
     const [clmesurement, setclmesurement] = useState('');
-    const [neak, setneak] = useState([]);
     const [customerid, setcustomerid] = useState('');
     const [id, setid] = useState('');
     const [data, setdata] = useState([]);
@@ -31,15 +31,13 @@ const Add_measurment_form = ({ route }) => {
     const [dvalue, setdvalue] = useState('');
     const [impnote, setimpnote] = useState('');
     const [imgurl, setImgurl] = useState('');
-    let newdata = [];
-    let alldataavailable = []
 
     const getdata = async () => {
 
         try {
-            const idi = route.params.id
+            
 
-            const res = await fetch(`https://aufcart.com/api/getuser/${idi}`, {
+            const res = await fetch(`https://aufcart.com/api/getuser/${route.params.id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -56,13 +54,7 @@ const Add_measurment_form = ({ route }) => {
                 setdata2(route.params.temp)
 
 
-                // const _inputs = [...inputs];
-
-                // data2.map((e, i) => {
-                //     _inputs.push({ name: e.cltpartname, value: '' });
-
-                // })
-                // setInputs(_inputs);
+             
                 addHandler()
                 // console.log(inputs);
                 console.log('data goted by api');
@@ -77,17 +69,9 @@ const Add_measurment_form = ({ route }) => {
 
     const addHandler = () => {
 
-        // // const _inputs = [...inputs];
-        // const _inputs = [];
-
-        // data2.map((e, i) => {
-        //     _inputs.push({ name: e.cltpartname, value: '' });
-
-        // })
         setInputs(route.params.temphooks);
         console.log(inputs);
         setloading(false)
-
 
     }
 
@@ -138,13 +122,6 @@ const Add_measurment_form = ({ route }) => {
 
 
     const Add_measurment = async () => {
-
-        console.log(Ordertype);
-        console.log(clmesurement);
-        console.log(inputs);
-        console.log(id);
-        console.log(route.params.obid);
-
         try {
 
             const res = await fetch(`https://aufcart.com/api/addmeasurment/${id}/${customerid}`, {
@@ -165,11 +142,7 @@ const Add_measurment_form = ({ route }) => {
             else {
                 setdata(data);
                 toggleModalVisibility()
-
-
             }
-
-
         } catch (e) {
             window.alert("SomeThing Went Wrong")
 
@@ -300,16 +273,7 @@ const Add_measurment_form = ({ route }) => {
                                 }
 
 
-
-
-
-
-
-
                             </View>
-
-
-
 
 
                             <View style={[styles.inputfield,{marginTop:responsiveHeight(2)}]}>
@@ -319,20 +283,12 @@ const Add_measurment_form = ({ route }) => {
                                 <TextInput placeholder='Special Note' value={impnote} onChangeText={e => setimpnote(e)} style={[styles.input, { borderRadius: responsiveWidth(2) }]} numberOfLines={3} textAlignVertical="top" multiline={true} />
                             </View>
 
-
-
-
-
-
                         </View>
                     </ScrollView>
 
                     <TouchableOpacity style={[styles.onlybtn, { marginTop: responsiveHeight(1), }]} onPress={() => { Add_measurment() }}  >
                         <Text style={styles.onlybtntext}>Save Measurment</Text>
                     </TouchableOpacity>
-
-
-
 
                 </SafeAreaView>
             )
@@ -342,58 +298,3 @@ const Add_measurment_form = ({ route }) => {
 
 export default Add_measurment_form
 
-// const styles = StyleSheet.create({
-//     container: {
-//         // marginHorizontal: 16,
-//     },
-//     fiedset: {
-//         flex: 1,
-//         flexDirection: "row",
-//         alignItems: "center",
-//         marginVertical: 15,
-
-//     },
-//     title: {
-//         fontSize: 20,
-//         opacity: .8,
-//         width: "50%",
-//         textAlign: "center",
-//     },
-//     input: {
-//         width: "30%",
-//         fontSize: 20,
-//         opacity: .7,
-//         textAlign: "center"
-//     },
-//     heading: {
-//         textAlign: "center",
-//         fontSize: 24,
-//         opacity: .7,
-//         marginTop: 30,
-//         marginBottom: 10,
-//         fontWeight: "bold",
-//         letterSpacing: 1,
-//     },
-//     btngroup: {
-//         flex: 1,
-//         flexDirection: "row",
-//         justifyContent: "space-evenly",
-//         alignItems: "center",
-//         marginVertical: 40,
-//     },
-//     btn: {
-//         width: "80%",
-//         borderColor: "#888888",
-//         borderWidth: 1,
-//         paddingVertical: 10,
-//         paddingHorizontal: 20,
-//         backgroundColor: "#56BC1F",
-//         borderRadius: 3
-//     },
-//     btntext: {
-//         fontSize: 20,
-//         color: "#fff",
-//         fontWeight: "bold",
-//         textAlign: "center"
-//     }
-// })

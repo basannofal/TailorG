@@ -29,7 +29,6 @@ import DeliveredOrder from './screen/DeliveredOrder';
 import Urgent from './screen/Urgent';
 import CotomerOrderForm from './screen/CotomerOrderForm';
 import Add_measurment_form from './screen/Add_measurment_form';
-import Add_measurment_form1 from './screen/Add_measurment_form(1)';
 import Profile from './screen/Profile';
 import ProfileDetail from './screen/ProfileDetail';
 import Onbording1 from './screen/Onbording1';
@@ -539,7 +538,6 @@ export default function App() {
               <Stack.Screen name="Cloth Type Part" component={ClothTypePart} />
               <Stack.Screen name="Profile Edit" component={ProfileEdit} />
               <Stack.Screen name="Add Measurment" component={Add_measurment_form} />
-              <Stack.Screen name="Add Measurment1" component={Add_measurment_form1} />
               <Stack.Screen name="Order Detail" component={OrderDetail} />
               <Stack.Screen name="Measurement Detail" component={Show_cuto_measure} />
               <Stack.Screen name="Measurements" component={CostomerMeasure} />

@@ -270,7 +270,7 @@ const Home = ({ route }) => {
                   <Text style={{ fontSize: responsiveFontSize(4), opacity: .4, fontFamily: "Regular" }}>No Customer Found</Text>
                   <TouchableOpacity style={{ width: responsiveWidth(74) }} onPress={() => {
                     navigation.navigate("Add Costomer", {
-                      id: id
+                      id: id,
                     })
                   }} >
                     <Text style={[{ textAlign: "center", marginTop: responsiveHeight(3), fontSize: responsiveFontSize(2), borderRadius: 10, padding: responsiveHeight(1), color: "#fff", fontFamily: "Regular", backgroundColor: "#56BC1F", }]}>Add Customer </Text>
