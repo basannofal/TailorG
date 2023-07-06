@@ -466,7 +466,7 @@ const OrderDetail = ({ route }) => {
                 <TouchableOpacity onPress={alertvisible} style={[styles.onlybtn, { backgroundColor: "#fbff12", width: responsiveWidth(40) }]}>
                   <View style={styles.flexstart}>
                     <Feather name="check" size={18} style={{ fontWeight: "bold", top: responsiveHeight(.3), }} color="#000" />
-                    <Text style={[styles.onlybtntext, { marginHorizontal: responsiveWidth(1), color: "#000" }]}>Deliver</Text>
+                    <Text style={[styles.onlybtntext, { marginHorizontal: responsiveWidth(1), color: "#000" }]}>Completed</Text>
                   </View>
                 </TouchableOpacity>
                 :

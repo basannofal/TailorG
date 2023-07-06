@@ -1,27 +1,16 @@
-import { ActivityIndicator, SafeAreaView, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Linking, Keyboard, BackHandler, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, SafeAreaView, FlatList, Text, TextInput, TouchableOpacity, View, Image, Linking, Keyboard } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import CostomerInfo from './CostomerInfo';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import * as Network from 'expo-network';
 import { FontAwesome } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons';
-import { Fontisto } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { fonts, styles } from './Style';
+import { styles } from './Style';
 import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font/build/FontHooks';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import Netinfo from './netinfo/Netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Home = ({ route }) => {
+const Home = React.memo(({ route }) => {
 
   const id = route.params._id
 
@@ -45,7 +34,7 @@ const Home = ({ route }) => {
   const [netinfo, setNetinfo] = useState(false);
 
 
-  const getdata = async () => {
+  const getdata = useCallback(async () => {
 
       try {
         // let x = await Network.getIpAddressAsync();
@@ -73,7 +62,8 @@ const Home = ({ route }) => {
         window.alert("Check Network Connection")
       }
 
-  }
+  }, [id])
+  
 
 
 
@@ -209,7 +199,7 @@ const Home = ({ route }) => {
 
                         <Image style={[styles.avtar,{marginLeft:responsiveWidth(1)}]} source={require('../assets/14.png')} />
 
-                        <View style={[styles.flatlisttext, { width: responsiveWidth(40), }]}>
+                        <View style={{ width: responsiveWidth(40),marginHorizontal:responsiveWidth(3) }}>
 
                           <Text style={[styles.titletext, { fontFamily: "Regular", letterSpacing: .5 }]}> {item.cname} </Text>
                           <View style={[styles.flexstart, { marginTop: 2 }]}>
@@ -270,7 +260,7 @@ const Home = ({ route }) => {
                   <Text style={{ fontSize: responsiveFontSize(4), opacity: .4, fontFamily: "Regular" }}>No Customer Found</Text>
                   <TouchableOpacity style={{ width: responsiveWidth(74) }} onPress={() => {
                     navigation.navigate("Add Costomer", {
-                      id: id
+                      id: id,
                     })
                   }} >
                     <Text style={[{ textAlign: "center", marginTop: responsiveHeight(3), fontSize: responsiveFontSize(2), borderRadius: 10, padding: responsiveHeight(1), color: "#fff", fontFamily: "Regular", backgroundColor: "#56BC1F", }]}>Add Customer </Text>
@@ -293,7 +283,7 @@ const Home = ({ route }) => {
 
 
 
-}
+})
 
 export default Home
 
