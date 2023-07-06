@@ -1,5 +1,5 @@
-import { ScrollView, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, {  useState } from 'react'
+import React, { useState, useCallback } from 'react';
+import { ScrollView, Modal, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -8,7 +8,7 @@ import { styles } from './Style';
 import { AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Add_Costomer = ({ route }) => {
+const Add_Costomer  = ({ route }) => {
   const [checked, setChecked] = useState('male');
   const [cname, setcname] = useState("");
   const [cphone, setcphone] = useState("");
@@ -16,26 +16,17 @@ const Add_Costomer = ({ route }) => {
   const [ccity, setccity] = useState("");
   const [caddress, setcaddress] = useState("");
   const [cemail, setcemail] = useState("");
-
-
   const [isModalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
+  const toggleModalVisibility = useCallback(() => {
+    setModalVisible(prevVisible => !prevVisible);
+  }, []);
 
-  const toggleModalVisibility = () => {
-    setModalVisible(!isModalVisible);
-  };
-
-
-  const navigation = useNavigation()
-
-  const postdata = async () => {
-
-    // 63064232cf92b07e37090e0a
-    toggleModalVisibility()
+  const postdata = useCallback(async () => {
+    toggleModalVisibility();
 
     try {
-      // const data = { cname, cphone, ccity, caddress, cemail, checked }
-
       const res = await fetch(`https://aufcart.com/api/Newcustomer/${route.params.id}`, {
         method: "PATCH",
         headers: {
@@ -44,41 +35,36 @@ const Add_Costomer = ({ route }) => {
         body: JSON.stringify({
           cname, cphone, optcphone, ccity, caddress, cemail, checked
         })
-      })
+      });
 
       const data = await res.json();
 
       if (!data) {
-      }
-      else {
-
-        await AsyncStorage.setItem('alldata', JSON.stringify(data))
+        // Handle error case
+      } else {
+        await AsyncStorage.setItem('alldata', JSON.stringify(data));
         navigation.navigate("Home", {
-          _id: id
-        })
+          _id: route.params.id
+        });
       }
-
-
     } catch (e) {
-      window.alert("SomeThing Went Wrong")
+      window.alert("Something Went Wrong");
+      console.log(e);
     }
+  }, [route.params.id, cname, cphone, optcphone, ccity, caddress, cemail, checked, toggleModalVisibility, navigation]);
 
-  }
 
   return (
 
-
-
-
-
-
-    <ScrollView style={{ backgroundColor: "#fff", }} showsVerticalScrollIndicator={false}>
-
-
-      <Modal animationType="slide"
-        transparent visible={isModalVisible}
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
+    <ScrollView style={{ backgroundColor: "#fff" }} showsVerticalScrollIndicator={false}>
+      <Modal
+        animationType="slide"
+        transparent
+        visible={isModalVisible}
         presentationStyle="overFullScreen"
-        onDismiss={toggleModalVisibility}>
+        onDismiss={toggleModalVisibility}
+      >
         <View style={styles.viewWrapper}>
           <View style={styles.modalView}>
             <View style={styles.modelicon}>
@@ -229,6 +215,8 @@ const Add_Costomer = ({ route }) => {
       </View>
 
     </ScrollView>
+
+    </KeyboardAvoidingView>
 
   )
 }
